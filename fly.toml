@@ -1,0 +1,18 @@
+app = "n8n-iapp"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[build]
+dockerfile = "Dockerfile"
+
+[env]
+NODE_ENV = "production"
+
+[[services]]
+internal_port = 5678
+protocol = "tcp"
+
+[[services.ports]]
+port = "80"
+Guarda con "Add fly.toml".
