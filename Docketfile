@@ -1,0 +1,8 @@
+ node: 18-alpine
+
+RUN npm install -g n8n
+WORKDIR / data
+COPY workflows /data/workflows
+ENV N8N_DATA_FOLDER="/data"
+EXPOSE 5678
+CMD ["n8n", "start", "--tunnel"]
