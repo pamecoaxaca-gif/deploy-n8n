@@ -1,0 +1,22 @@
+name: Cl & Deploy
+
+on:
+ push:
+  branches: [main ]
+
+jobs: build-and-deploy:
+ runs-on: ubuntu-latest
+
+  steps:
+    - uses: actions/checkout@v3
+
+    - name: Install flyctl
+    run: curl -L https://gfly.io/install.sh | sh
+
+    - name: Auth Fly
+      env: 
+      FLYAPITOKEN: ${{ secrets.FLYAPITOKEN }}
+     run: fly auth token $FLYAPITOKEN
+
+    - name: Deploy to Fly.io
+    run: fly deploy --config fly.toml --remote-only
