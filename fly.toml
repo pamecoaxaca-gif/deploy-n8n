@@ -1,4 +1,4 @@
-app = 'yourappname'
+app = 'n8n-app-flyin'
 primary_region = 'ams'
 
 [build]
