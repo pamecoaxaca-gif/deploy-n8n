@@ -15,4 +15,3 @@ protocol = "tcp"
 
 [[services.ports]]
 port = "80"
-Guarda con "Add fly.toml".
