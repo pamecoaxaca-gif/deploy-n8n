@@ -1,0 +1,40 @@
+name: n8n ↔️ GitHub Sync
+
+on:
+  push:
+    branches: [main]
+    paths: ['workflows-export/**']
+  schedule:
+    - cron: '0 * * * *'  # Cada hora
+  workflow_dispatch:
+
+jobs:
+  export_n8n_to_git:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export workflows
+        run: bash scripts/export-workflows.sh
+        env:
+          N8N_USER: admin
+          N8N_PASS: ${{ secrets.N8N_PASS }}
+          N8N_HOST: ${{ secrets.N8N_HOST }}
+      - name: Commit & push
+        run: |
+          git config --global user.name 'n8n-bot'
+          git config --global user.email 'n8n-bot@users.noreply.github.com'
+          git add workflows-export/
+          git commit -m "Auto export workflows from n8n" || echo "No changes"
+          git push
+
+  import_git_to_n8n:
+    needs: export_n8n_to_git
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import workflows
+        run: bash scripts/import-workflows.sh
+        env:
+          N8N_USER: admin
+          N8N_PASS: ${{ secrets.N8N_PASS }}
+          N8N_HOST: ${{ secrets.N8N_HOST }}
