@@ -1,9 +1,13 @@
+# fly.toml app configuration file generated for n8n-app-flyin on 2025-08-16T13:56:50Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
 app = 'n8n-app-flyin'
 primary_region = 'ams'
 
 [build]
   dockerfile = 'Dockerfile'
-
 
 [[mounts]]
   source = 'n8n_vol'
@@ -23,7 +27,6 @@ primary_region = 'ams'
     method = 'GET'
     path = '/healthz'
     protocol = 'http'
-
 
 [[vm]]
   memory = '1gb'
